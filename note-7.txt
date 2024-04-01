@@ -1,0 +1,35 @@
+this notes explain the profile service of user like create, update ,address related stuffs and discuss about db-migrate for address table.............................
+
+
+in this we created create profile , getProfile and editProfile
+we add in dto section--> AdressProfile input and edit the userModel by including the AdressModel[] in it
+
+----------------------------------------------------------------------------------------
+create_migration:
+	db-migrate create $(n) --sql-file
+
+ make create_migration n=user-address
+
+ it will create user-address.sql for migration related operation and user-address.js 
+----------------------------------------------------------------------------------------
+Indexing column to optimize performance
+
+Now, imagine you frequently run queries to find addresses in a specific city. Without an index on the "city" column, the database would need to perform a full table scan each time you execute such a query. This means it would have to examine every row in the "address" table to find the rows matching the specified city.
+
+However, by creating an index on the "city" column, you can improve the performance of these queries. When you create an index, the database system creates a separate data structure that organizes the values of the indexed column(s) in a sorted order. In this case, the values in the "city" column would be sorted alphabetically.
+
+For example, let's create an index on the "city" column:
+
+sql
+Copy code
+CREATE INDEX ON "address" ("city");
+After creating this index, the database system creates a data structure that looks something like this:
+
+plaintext
+Copy code
+Index on "city" column
+-----------------------
+Berlin
+London
+New York
+Paris

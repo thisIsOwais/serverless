@@ -1,0 +1,36 @@
+middy wrapper to use middleware on handler function 
+event comes as non json or js object we have to parse it
+
+
+.............
+versionFunction:true (bydefault) creating record all version of lambda function on each deployment
+
+
+
+
+
+........................
+
+
+docker
+make compose.yml file
+to give port to postgresql
+volume down to close and save it data to /var/lib......
+
+Make
+
+-------------------------------------------------
+install tablePlus for postgresql local database
+select postgresql
+configure everything according to compose.yml
+
+create DB client
+
+make connection
+
+
+
+
+.........................
+using jsonwebtoken and use other paseto
+ 

@@ -1,0 +1,26 @@
+----------------
+npm i -g db-migrate
+
+link:https://db-migrate.readthedocs.io/en/latest/Getting%20Started/configuration/
+
+to create migration
+
+add database.json
+db-migrate create initialize --sql-file
+
+there is not table of user in database
+
+db-migrate up
+to intialize the user scherma user table is created
+
+db-migrate down
+to drop the user table
+-----------------------------------------------------------------
+With PowerShell, you must ensure Get-ExecutionPolicy is not Restricted. We suggest using Bypass to bypass the policy to get things installed or AllSigned for quite a bit more security.
+
+Run Get-ExecutionPolicy. If it returns Restricted, then run Set-ExecutionPolicy AllSigned or Set-ExecutionPolicy Bypass -Scope Process.
+Now run the following command:
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+Chocolatey: Chocolatey is a package manager for Windows. It manages Windows software packages, including applications, utilities, and development tools. Chocolatey simplifies the process of installing, upgrading, and managing software on Windows systems.
+npm: npm (Node Package Manager) is a package manager for JavaScript and Node.js. It manages JavaScript libraries and tools used for web development, server-side development, and various other tasks. npm is primarily used in the Node.js ecosystem.

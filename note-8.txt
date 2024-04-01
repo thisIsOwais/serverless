@@ -1,0 +1,44 @@
+cdk::youtube video---> https://www.youtube.com/watch?v=T-H4nJQyMig
+
+
+Content of this Notes:
+- AWS CDK and how it is working behind the scene
+- How to create ApiGateway
+- How to add RestAPI endpoints with ApiGateway Resources
+- How to app source code is dealing with CDK
+- Initial Deployment of Microservice using CDK walk-through.
+
+
+------------------------------------------------------
+->create usergroup add admin permission to It
+->create user add to usergroup generate access key
+->aws configure
+
+-> make directory of service
+-> enter to directory
+->cdk init app --language=typescript // it will initialize the app which is required to deploy on cloud formation
+
+-> CDK Bootstrap is initialising the prerequisites to run the cloudformation stack deployment in AWS this is necessary for the first time only per region which is preparing all required access and dependencies.
+CDK Synth is checking the infrastructure changes before deployment to make sure it is correct as per coludformation requirements.
+
+->In Serverless it's very hard to keep track of Development errors / typo or mistakes in YMAL on Infrastructure and in the CDK you can have better code sense due to use of Typescript and fluent CDK support. Choice is yours I have simply showed both way how we can build 
+
+
+-> cdk Bootstrap // run docker simultaneously it creates image of the product_service
+
+=-------------------------------------------------
+-> infrastructure code in lib
+-> application logic or business logic will be in src
+
+
+------------------------------------------
+Construct from aws-cdk
+In summary, Construct is a fundamental building block in AWS CDK that enables you to define, organize, and configure cloud resources in a programmatic and reusable manner. It provides a powerful abstraction layer for working with AWS infrastructure as code.
+
+Here are some key aspects of the Construct class:
+
+Hierarchical Structure: Constructs form a hierarchical tree-like structure, where each construct can contain other constructs as children. This hierarchical structure allows you to organize and compose your infrastructure in a logical manner, reflecting the relationships between resources.
+
+Configuration: Constructs encapsulate the configuration and properties of AWS resources. You can specify various attributes and settings for each construct, such as resource names, AWS region, tags, and so on.
+
+-----------------------------------------------------------

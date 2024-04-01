@@ -1,0 +1,78 @@
+
+----------------------
+create iam user
+give admin permission
+
+aws configure
+access key
+Secret key
+
+
+serverless.yml
+versionFunction:true (bydefault) creating record all version of lambda function on each deployment
+
+
+sls deploy --verbose to deploy with logs on aws
+
+-----------------------------------------
+container from tsyringe resolve the @autoinjectable() class
+
+@autoinjectable means injecting all dependencies like repository, plaintotext and other requires for creating the class UserService
+
+this resolve the UserService class in userHandler.ts
+const service = container.resolve(UserService); 
+
+
+---------------------------------------------------
+in handler.ts
+we are using reflect-metadata--> it's decorate the data output and add extra data i.e. metadata on top of actual data if added
+
+example
+    target={name:"owais", year:"2024"}
+
+    Reflect.defineMetadata(metadataKey, metadataValue, target);
+
+    let result = Reflect.getMetadata(metadataKey, target);
+
+
+------------------------------------------------------------------------
+
+plain to class
+
+import { plainToClass } from 'class-transformer';
+
+
+
+class User {
+    id: number;
+    username: string;
+    email: string;
+
+    constructor(id: number, username: string, email: string) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+    }
+}
+
+const userJson = {
+    id: 1,
+    username: "john_doe",
+    email: "john@example.com"
+};
+
+const user = plainToClass(User, userJson);
+
+After executing this code, the user variable will contain an instance of the User class with its properties populated with the values from the userJson object.
+
+----------------------------------------------------
+input=plaintotext(User,event.)   capture the error according to validation define in dto 
+and appvalidator catch the error from input 
+
+-------------------------------------------------------------------
+related to database:psotgres.config for password msd section make it true for all to login without password in postgres and postgres.hb for ipv4 
+
+--------------------------------------------------------------
+create db 
+create roles with password and previlages
+SQL query to change password : ALTER USER <username> WITH PASSWORD "your password"
