@@ -1,0 +1,149 @@
+Content of this Notes:
+- File upload mechanism with S3
+- CloudFront distribution
+- How to use private S3 bucket 
+
+------------------------------------------------------------
+->Amazon Simple Storage Service (S3) is a cloud storage service provided by Amazon Web Services (AWS) that allows you to store and retrieve data over the internet. Here's a simple explanation of what S3 is and how it works:
+
+Storage: S3 provides a highly scalable and durable storage infrastructure for storing a wide variety of data types, including documents, images, videos, databases, and backups.
+
+Buckets: S3 uses a concept called "buckets" to organize and store data. A bucket is like a folder where you can store your files. Each bucket has a unique name, and you can create multiple buckets to organize your data.
+
+Objects: Inside each bucket, you can store individual files called "objects." An object can be anything from a text file to a large multimedia file. Each object is identified by a unique key (i.e., its name) within the bucket.
+
+Durability and Availability: S3 is designed to provide high durability and availability for your data. It stores multiple copies of your data across different locations, ensuring that your data is highly resilient to hardware failures and disasters.
+
+Security: S3 offers robust security features to help you control access to your data. You can set access policies and permissions to restrict who can view, upload, download, or delete objects within your buckets.
+
+Scalability: S3 is highly scalable, meaning you can store virtually unlimited amounts of data without worrying about capacity constraints. You can easily scale up or down based on your storage needs.
+
+Integration: S3 integrates seamlessly with other AWS services and third-party applications. You can use S3 as a storage backend for various applications, such as websites, mobile apps, data analytics, and machine learning workflows.
+
+amazon s3 
+creation of bucket
+name- globally unique
+ACLs disabled
+private bucket
+encryption sse-s3
+bucket key-enable
+--------------------------------------------------------------
+global content delivery network --- CloudFront(Enable accelerated, reliable and secure content delivery for Amazon S3 buckets)
+
+create CloudFront
+select bucket from dropdown
+create OAC (RECOMENDED)
+Keep all option as it is 
+click on create 
+you will be got policy of cloudFront for s3 bucket
+select s3 bucket on which cloudFront is to be wrapped ,  permissions-> edit policy -> paste the copied policy Here
+
+policy looks like as --->{
+        "Version": "2008-10-17",
+        "Id": "PolicyForCloudFrontPrivateContent",
+        "Statement": [
+            {
+                "Sid": "AllowCloudFrontServicePrincipal",
+                "Effect": "Allow",
+                "Principal": {
+                    "Service": "cloudfront.amazonaws.com"
+                },
+                "Action": "s3:GetObject",
+                "Resource": "arn:aws:s3:::owais-sls-demo-bucket/*",
+                "Condition": {
+                    "StringEquals": {
+                      "AWS:SourceArn": "arn:aws:cloudfront::590183782708:distribution/E3SVBCSFOBMP00"
+                    }
+                }
+            }
+        ]
+      }
+
+____________________________________________________________________________
+
+->>flow of notes
+             
+             Product service stack----------------->S3Bucket
+                       |
+                       |
+                       |
+                       |
+                       |
+                       -
+                    SeviceStack-------------------> productService , dealService, CategoryService,imageService
+
+@create lambda funciton of image api.ts
+
+ // grab the fileName from queryString
+ // give unique name of that file (using uuid and append to filename)
+  // create S3Params
+    // get Signed URL
+    // give to back to client for upload image
+
+
+@service-stack
+ -> add imageService as nodejsFunction
+ -> bucket string
+
+@apigateway
+-> create apgw for imageService // create endpoints for imageService
+
+
+@s3bucketStack.ts
+    export class S3BucketStack extends Construct {
+  public readonly bucket: Bucket;
+
+  constructor(scope: Construct, id: string) {
+    super(scope, id);
+
+    this.bucket = new Bucket(scope, `${id}-bucket`, {
+      blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+      encryption: BucketEncryption.S3_MANAGED,
+      enforceSSL: true,
+      versioned: false,
+      removalPolicy: RemovalPolicy.DESTROY, //
+    });
+  }
+}
+
+
+@Product_serviceStack
+-> create bucket as bucket from s3bucketStack.ts
+->include image service in instance of serviceStack under ProductServiceStack class
+-> add bucket:bucket.name as argument in constructor of serviceStack
+-> grantReadandWrite permission for bucket to imageService(or lambdaFunction)
+----------------------------------------------------------------------------------------
+cdk deploy
+
+
+------------------------------------------------------------------------------------
+->get the key of file in s3 where frontEnd will upload the image on URL provided by s3
+{
+    url:"",
+    "key":
+}
+->get distribution domain name from cloud front as cloudFront service is created
+
+->to access file CloudFrontDomainName/key you will get your file accesss
+
+------------------------------------------------------------------------------------
+version problem may be occured in nodejsFunction version and imageApi.ts s3(version)
+
+Actually the issue was with using aws-sdk v2 as you said and we need to use aws-sdk v3 with Node js 18v.
+Need to change code a bit for signing the url when using sdk v3. Below the updated code:
+
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+
+const s3Client = new S3Client({
+    region: 'us-east-1'
+});
+const s3Params = {
+        Bucket: process.env.BUCKET_NAME,
+        Key: fileName,
+        ContentType: 'image/jpeg'
+    };
+
+const command = new PutObjectCommand(s3Params);
+const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+

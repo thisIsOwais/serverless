@@ -1,0 +1,104 @@
+Content of this notes:
+- Handling Product Category
+- Homepage API iterations
+
+
+
+____________________________________________________________________________
+electornics 660d922e2e386e2646291d19    //create category parentId=NULL
+{
+	smart TV 660d92de3f361f874387a354   //create sub-category parentId=categoryID
+    {
+
+    }
+	Laptop   660d9356cdbb7b16dcad8656    //create sub-category parentId=categoryID
+    {
+			(Lenovo Rayzon, 5660d949ffe58e712c971af85)    //create products parentId=subCategoryID
+    }
+    Phone	 660d937dea6ac4bdc52725e3
+	{	
+        	(google Pixel 6, 660d944c8ee07e8211653309)
+			(Iphone 16,      660d95480e35d310518261e1)
+    }
+}
+food        660d9265f0d4e718a25e2b0b
+{
+
+}
+
+fashion     660d9291f12c697f925eafec
+{
+
+}
+
+
+
+	GET CATEGORIES
+
+	{
+    "message": "success",
+    "data": [
+        {
+            "_id": "660d922e2e386e2646291d19",
+            "name": "Electronics",
+            "parentId": null,
+            "subCategories": [
+                {
+                    "_id": "660d92de3f361f874387a354",
+                    "name": "Smart TV",
+                    "parentId": "660d922e2e386e2646291d19",
+                    "subCategories": [],
+                    "products": [],
+                    "displayOrder": 1,
+                    "imageUrl": "48c867b9-09a6-4d7b-b8d6-7244c049965f__Scaling_1.jpg"
+                },
+                {
+                    "_id": "660d9356cdbb7b16dcad8656",
+                    "name": "Laptop",
+                    "parentId": "660d922e2e386e2646291d19",
+                    "subCategories": [],
+                    "products": [
+                        "660d949ffe58e712c971af85"
+                    ],
+                    "displayOrder": 1,
+                    "imageUrl": "48c867b9-09a6-4d7b-b8d6-7244c049965f__Scaling_1.jpg"
+                },
+                {
+                    "_id": "660d937dea6ac4bdc52725e3",
+                    "name": "Phone",
+                    "parentId": "660d922e2e386e2646291d19",
+                    "subCategories": [],
+                    "products": [
+                        "660d944c8ee07e8211653309",
+                        "660d95480e35d310518261e1"
+                    ],
+                    "displayOrder": 1,
+                    "imageUrl": "48c867b9-09a6-4d7b-b8d6-7244c049965f__Scaling_1.jpg"
+                }
+            ],
+            "products": [],
+            "displayOrder": 1,
+            "imageUrl": "48c867b9-09a6-4d7b-b8d6-7244c049965f__Scaling_1.jpg"
+        },
+        {
+            "_id": "660d9265f0d4e718a25e2b0b",
+            "name": "Food",
+            "parentId": null,
+            "subCategories": [],
+            "products": [],
+            "displayOrder": 1,
+            "imageUrl": "48c867b9-09a6-4d7b-b8d6-7244c049965f__Scaling_1.jpg"
+        },
+        {
+            "_id": "660d9291f12c697f925eafec",
+            "name": "Fashion",
+            "parentId": null,
+            "subCategories": [],
+            "products": [],
+            "displayOrder": 1,
+            "imageUrl": "48c867b9-09a6-4d7b-b8d6-7244c049965f__Scaling_1.jpg"
+        }
+    ]
+}
+
+____________________________________________________________________________

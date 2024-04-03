@@ -32,13 +32,42 @@ CDK Synth is checking the infrastructure changes before deployment to make sure 
 
 
 ------------------------------------------
-Construct from aws-cdk
+->Construct from aws-cdk
 In summary, Construct is a fundamental building block in AWS CDK that enables you to define, organize, and configure cloud resources in a programmatic and reusable manner. It provides a powerful abstraction layer for working with AWS infrastructure as code.
 
 Here are some key aspects of the Construct class:
 
-Hierarchical Structure: Constructs form a hierarchical tree-like structure, where each construct can contain other constructs as children. This hierarchical structure allows you to organize and compose your infrastructure in a logical manner, reflecting the relationships between resources.
+->Hierarchical Structure: Constructs form a hierarchical tree-like structure, where each construct can contain other constructs as children. This hierarchical structure allows you to organize and compose your infrastructure in a logical manner, reflecting the relationships between resources.
 
-Configuration: Constructs encapsulate the configuration and properties of AWS resources. You can specify various attributes and settings for each construct, such as resource names, AWS region, tags, and so on.
+->Configuration: Constructs encapsulate the configuration and properties of AWS resources. You can specify various attributes and settings for each construct, such as resource names, AWS region, tags, and so on.
 
+->props
+props: The props parameter (short for properties) typically represents configuration options or settings that are passed to the construct to customize its behavior or define its properties. These properties can vary depending on the specific construct being instantiated. The props object often contains key-value pairs representing attributes or parameters that configure the behavior of the construct.
 -----------------------------------------------------------
+
+cdk destroy --verbose // to delete the stack from aws stack
+
+
+
+        +-------------------------------------+
+        |        AWS CDK Framework            |
+        +---------------------+---------------+
+                              |
+                              v
+        +-------------------------------------+
+        |             Constructs             |
+        |          (Resources, Stacks)       |
+        +---------------------+---------------+
+                              |
+                              v
+        +-------------------------------------+
+        |           CDK Stacks                |
+        |        (Logical groupings          |
+        |          of related resources)     |
+        +---------------------+---------------+
+                              |
+                              v
+        +-------------------------------------+
+        |         CloudFormation              |
+        |       (Infrastructure as Code)      |
+        +-------------------------------------+

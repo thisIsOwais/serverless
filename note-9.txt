@@ -1,0 +1,30 @@
+---------------------------------------------
+Content of this Episode:
+-  Introducing Product Endpoints
+- Customization of the dynamic routes
+-  Setup CDK local server to test endpoint
+
+------------------------------------------------------------------
+
+we add category, product, deal in place of ApiGateway handles
+Make resource Type {number, method,types} to manage all routes efficiently
+in service-stack.js we add props:as ApiGatewaystackProps instead of product service
+
+ApiGatewaystackProps contains
+interface ApiGatewayStackProps {
+  productService: IFunction;
+  categoryService: IFunction;
+  dealsService: IFunction;
+  imageService: IFunction;
+}
+
+---------------------------------------------------------------------
+SAM-- server application module to run server locally for testing api no need to deploy to test api
+
+install sam setup cli
+
+where sam
+C:\Program Files\Amazon\AWSSAMCLI\bin\sam.cmd --> path where cli present in our os
+which --version
+
+we add this script-> "dev": "cdk synth && sam local start-api -t cdk.out/ProductServiceStack.template.json"

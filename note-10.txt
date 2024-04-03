@@ -1,0 +1,34 @@
+Content of this Episode:
+- Serving endpoints with real data
+- DB connection 
+- Testing endpoints with Local Server
+
+------------------------------------------------------------------------------------
+database for product service is mongodb
+database for chat service may be dynamodb
+
+----------------------------------------------------------------------------------
+-> create product schema by mongoose
+->type doc by prisma orm
+->use odm as mongoose 
+
+
+-------------------------------------------------------------------------------------
+
+****NOTE- if we dont parse the event.body as JSON.Parse() as it coming as string from the frontend
+event.body will be read as null then no input data will be saved in mongodb 
+
+--------------------------------------------------------------------------------------
+->
+products
+      .find()
+      .skip(offset)
+      .limit(pages ? pages : 500);
+
+ -> Offset:
+
+->The offset parameter determines the starting point from which products will be retrieved.
+It specifies the number of products to skip from the beginning of the dataset.
+For example, if offset is 10, the function will start retrieving products from the 11th product onwards, effectively skipping the first 10 products.
+
+->So, when the pages parameter is mentioned in the code, it determines how many items or records will be retrieved from the dataset in each logical "page" of the paginated result. It helps in controlling the amount of data sent from the backend to the frontend at once, thereby improving performance and user experience.
