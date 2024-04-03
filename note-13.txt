@@ -1,0 +1,81 @@
+
+Content of this Notes:
+- Microservice Communication Use Case
+- Add to cart
+--------------------------------------------------------------------------
+                __________________cart------------> cartItem
+               |
+               |
+               |
+               |
+               |
+user ----------
+               |
+               |
+               |
+               |
+               |__________________createOrder--------------->publish----------[messageQueue]
+                                                                                    |
+                                                                                    |
+                                                                                Subscribe
+                                                                                    |
+                                                                                    |
+                                                                                    |  
+                                                                                TRANSACTION
+
+
+communication can be done by 
+read-> http/rpc/event Bus
+write->fire/forget or messageBroker to publish message
+--------------------------------------------------------------------------------------------------
+
+Product_service---------<>
+
+   -> make msg-queue-service , add to service and product stack (configure the infrastructure)
+   -> create msg-queue.ts api handler ----> add handleQueueOperation method in product service
+   -> configure end point for msg-queue in apigateway stack.ts
+
+                              |-------->productId:string  
+                              |         Action:string //GET_PRODUCT
+                              |  
+                              |  
+   make service input.ts =====|
+                              |
+                              |
+                              |
+                              |
+--------------------------------------------------------------------------------------------------
+
+User_service---------<>
+
+-> make create_migration n=cart_n_cart_done
+-> write up and down sql for this cart and shopping cart table in up and drop both table in down
+-> handler-->  add cart related endpoint--> make cart service --> cart repo
+-> 
+
+                              |-------->cartInput
+                              |         
+   make cartinput.ts ==========
+                              |
+                              |-------->update cart input
+                              
+-> create ItemsModel and shoppingCartModel
+-> make directory of message-queue
+                        |
+                        |
+                    index.ts
+                        |
+                        |
+                    import axios from "axios";
+                    const PRODUCT_SERVICE_URL = "http://127.0.0.1:300/products-queue"; // it will be come from process
+                    export const PullData = async (requestData: Record<string, unknown>) =>
+                    return axios. post (PRODUCT_SERVICE_URL, requestData);
+
+
+---> add this in serverless.yml
+    this will run the serverless server on below configure
+            custom:
+               stage: "dev"
+               serverless-offline:
+               httpPort: 4000
+               LambdaPort: 4002
